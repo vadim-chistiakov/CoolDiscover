@@ -9,19 +9,28 @@
 /* Begin PBXBuildFile section */
 		AE1C7DDC298AEAFD00362448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */; };
 		AE1C7DDE298AEAFD00362448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */; };
-		AE1C7DE0298AEAFD00362448 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DDF298AEAFD00362448 /* ViewController.swift */; };
+		AE1C7DE0298AEAFD00362448 /* PinterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DDF298AEAFD00362448 /* PinterestViewController.swift */; };
 		AE1C7DE5298AEAFD00362448 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE1C7DE4298AEAFD00362448 /* Assets.xcassets */; };
 		AE1C7DE8298AEAFD00362448 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE1C7DE6298AEAFD00362448 /* LaunchScreen.storyboard */; };
+		AE1C7DF0298AF15000362448 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DEF298AF15000362448 /* PinterestLayout.swift */; };
+		AE1C7DF2298AF8FC00362448 /* PinterestLayoutExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DF1298AF8FC00362448 /* PinterestLayoutExample.swift */; };
+		AE1C7DF5298AFCB200362448 /* PictureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DF4298AFCB200362448 /* PictureModel.swift */; };
+		AE1C7DF8298BCFC200362448 /* PictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DF7298BCFC200362448 /* PictureCell.swift */; };
+		AE1C7DFB298C4F3B00362448 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AE1C7DFA298C4F3B00362448 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AE1C7DD8298AEAFD00362448 /* PinterestCompositionalLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PinterestCompositionalLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AE1C7DDF298AEAFD00362448 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AE1C7DDF298AEAFD00362448 /* PinterestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestViewController.swift; sourceTree = "<group>"; };
 		AE1C7DE4298AEAFD00362448 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE1C7DE7298AEAFD00362448 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AE1C7DE9298AEAFD00362448 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE1C7DEF298AF15000362448 /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		AE1C7DF1298AF8FC00362448 /* PinterestLayoutExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayoutExample.swift; sourceTree = "<group>"; };
+		AE1C7DF4298AFCB200362448 /* PictureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureModel.swift; sourceTree = "<group>"; };
+		AE1C7DF7298BCFC200362448 /* PictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE1C7DFB298C4F3B00362448 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,14 +64,34 @@
 		AE1C7DDA298AEAFD00362448 /* PinterestCompositionalLayout */ = {
 			isa = PBXGroup;
 			children = (
+				AE1C7DF6298BCF9D00362448 /* Views */,
+				AE1C7DF3298AFCA100362448 /* Models */,
 				AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */,
 				AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */,
-				AE1C7DDF298AEAFD00362448 /* ViewController.swift */,
+				AE1C7DDF298AEAFD00362448 /* PinterestViewController.swift */,
+				AE1C7DEF298AF15000362448 /* PinterestLayout.swift */,
+				AE1C7DF1298AF8FC00362448 /* PinterestLayoutExample.swift */,
 				AE1C7DE4298AEAFD00362448 /* Assets.xcassets */,
 				AE1C7DE6298AEAFD00362448 /* LaunchScreen.storyboard */,
 				AE1C7DE9298AEAFD00362448 /* Info.plist */,
 			);
 			path = PinterestCompositionalLayout;
+			sourceTree = "<group>";
+		};
+		AE1C7DF3298AFCA100362448 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AE1C7DF4298AFCB200362448 /* PictureModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AE1C7DF6298BCF9D00362448 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AE1C7DF7298BCFC200362448 /* PictureCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,6 +110,9 @@
 			dependencies = (
 			);
 			name = PinterestCompositionalLayout;
+			packageProductDependencies = (
+				AE1C7DFA298C4F3B00362448 /* SnapKit */,
+			);
 			productName = PinterestCompositionalLayout;
 			productReference = AE1C7DD8298AEAFD00362448 /* PinterestCompositionalLayout.app */;
 			productType = "com.apple.product-type.application";
@@ -108,6 +141,9 @@
 				Base,
 			);
 			mainGroup = AE1C7DCF298AEAFD00362448;
+			packageReferences = (
+				AE1C7DF9298C4F3B00362448 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = AE1C7DD9298AEAFD00362448 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -134,9 +170,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE1C7DE0298AEAFD00362448 /* ViewController.swift in Sources */,
+				AE1C7DF5298AFCB200362448 /* PictureModel.swift in Sources */,
+				AE1C7DF0298AF15000362448 /* PinterestLayout.swift in Sources */,
+				AE1C7DE0298AEAFD00362448 /* PinterestViewController.swift in Sources */,
 				AE1C7DDC298AEAFD00362448 /* AppDelegate.swift in Sources */,
 				AE1C7DDE298AEAFD00362448 /* SceneDelegate.swift in Sources */,
+				AE1C7DF8298BCFC200362448 /* PictureCell.swift in Sources */,
+				AE1C7DF2298AF8FC00362448 /* PinterestLayoutExample.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +384,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AE1C7DF9298C4F3B00362448 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AE1C7DFA298C4F3B00362448 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE1C7DF9298C4F3B00362448 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AE1C7DD0298AEAFD00362448 /* Project object */;
 }
