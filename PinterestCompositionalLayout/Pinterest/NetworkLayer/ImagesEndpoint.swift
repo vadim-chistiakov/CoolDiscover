@@ -32,7 +32,10 @@ extension ImagesEndpoint: GetEndpoint {
     var params: [URLQueryItem]? {
         switch self {
         case .images(let page):
-            return [.init(name: "page", value: "\(page)")]
+            return [
+                .init(name: "page", value: "\(page)"),
+                .init(name: "per_page", value: "30")
+            ]
         }
     }
 

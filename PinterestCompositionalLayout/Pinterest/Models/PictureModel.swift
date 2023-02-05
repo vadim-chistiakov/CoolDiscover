@@ -18,6 +18,11 @@ struct PictureModel: Hashable, Decodable {
     let urls: Urls
     let width: CGFloat
     let height: CGFloat
+    let blurHash: String
+    
+    var blurHashSize: CGSize {
+        .init(width: width/100, height: height/100)
+    }
 }
 
 extension PictureModel: Ratioable {

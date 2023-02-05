@@ -16,7 +16,7 @@ enum Section {
     case main
 }
 
-final class PinterestViewController: UIViewController {
+final class PinterestViewController: UIViewController, UICollectionViewDelegate {
     
     private enum Const {
         static let cellId = "cellId"
@@ -45,14 +45,12 @@ final class PinterestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureRefresh()
         configureDataSource()
-        viewModel.loadImages()
+        viewModel
+            .loadImages(animatingDifferences: false)
             .sink { [weak self] ratios in
-                guard let self else { return }
-                self.collectionView.setCollectionViewLayout(
-                    self.createLayout(ratios: ratios),
-                    animated: false
-                )
+                self?.configureLayout(ratios: ratios)
             }
             .store(in: &cancellables)
     }
@@ -75,20 +73,23 @@ final class PinterestViewController: UIViewController {
     
     @objc
     private func handleRefresh() {
-        
+        guard !viewModel.isRefreshing else { return }
+        viewModel
+            .refresh()
+            .sink { [weak self] ratios in
+                self?.configureLayout(ratios: ratios)
+                self?.collectionView.refreshControl?.endRefreshing()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func configureLayout(ratios: [CGFloat]) {
+        collectionView.setCollectionViewLayout(
+            createLayout(ratios: ratios),
+            animated: false
+        )
     }
 
-}
-
-extension PinterestViewController: UICollectionViewDelegate  {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-//        collectionView.deselectItem(at: indexPath, animated: true)
-//        guard let picture = dataSource.itemIdentifier(for: indexPath) else { return }
-//        print(picture)
-    }
 }
 
 extension PinterestViewController {
@@ -129,12 +130,13 @@ extension PinterestViewController {
     private func configureDataSource() {
         viewModel.dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: { [weak self] (collectionView, indexPath, contact) -> PictureCell? in
+            cellProvider: { [weak self] (collectionView, indexPath, model) -> PictureCell? in
                 guard let self else { return .init() }
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: Const.cellId, for: indexPath) as! PictureCell
-                cell.titleLabel.text = contact.description
+                cell.imageView.image = UIImage(blurHash: model.blurHash, size: model.blurHashSize)
                 
+                //TODO: - Как лучше организовать запрос картинок?
                 self.viewModel.loadImage(for: indexPath.item)
                     .sink { _ in }
                     receiveValue: { data in

@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: scene)
         
-        let viewModel = PinterestViewModel(imagesNetworkService: ImagesNetworkServiceImpl())
+        let viewModel = PinterestViewModelImpl(imagesNetworkService: ImagesNetworkServiceImpl())
         let vc = PinterestViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: vc)
         window?.rootViewController = navigationController

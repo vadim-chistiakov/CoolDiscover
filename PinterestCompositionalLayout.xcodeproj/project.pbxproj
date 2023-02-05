@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE15BA89298FDEA4000D2C92 /* EasyNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = AE15BA88298FDEA4000D2C92 /* EasyNetwork */; };
+		AE15BA8C29903782000D2C92 /* BlurHashDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE15BA8B29903782000D2C92 /* BlurHashDecode.swift */; };
 		AE1C7DDC298AEAFD00362448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */; };
 		AE1C7DDE298AEAFD00362448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */; };
 		AE1C7DE0298AEAFD00362448 /* PinterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DDF298AEAFD00362448 /* PinterestViewController.swift */; };
@@ -25,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE15BA8B29903782000D2C92 /* BlurHashDecode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurHashDecode.swift; sourceTree = "<group>"; };
 		AE1C7DD8298AEAFD00362448 /* PinterestCompositionalLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PinterestCompositionalLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,12 +53,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE1C7DFB298C4F3B00362448 /* SnapKit in Frameworks */,
+				AE15BA89298FDEA4000D2C92 /* EasyNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE15BA8A29903771000D2C92 /* BlurHashDecode */ = {
+			isa = PBXGroup;
+			children = (
+				AE15BA8B29903782000D2C92 /* BlurHashDecode.swift */,
+			);
+			path = BlurHashDecode;
+			sourceTree = "<group>";
+		};
+		AE15BA8D29903A86000D2C92 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */,
+				AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */,
+				AE1C7DE4298AEAFD00362448 /* Assets.xcassets */,
+				AE1C7DE6298AEAFD00362448 /* LaunchScreen.storyboard */,
+				AE1C7DE9298AEAFD00362448 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		AE1C7DCF298AEAFD00362448 = {
 			isa = PBXGroup;
 			children = (
@@ -76,18 +100,9 @@
 		AE1C7DDA298AEAFD00362448 /* PinterestCompositionalLayout */ = {
 			isa = PBXGroup;
 			children = (
-				AE1C7E06298FC3EE00362448 /* NetworkLayer */,
-				AE1C7DF6298BCF9D00362448 /* Views */,
-				AE1C7DF3298AFCA100362448 /* Models */,
-				AE1C7E0E298FC8A500362448 /* ViewModel */,
-				AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */,
-				AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */,
-				AE1C7DDF298AEAFD00362448 /* PinterestViewController.swift */,
-				AE1C7DEF298AF15000362448 /* PinterestLayout.swift */,
-				AE1C7DF1298AF8FC00362448 /* PinterestLayoutExample.swift */,
-				AE1C7DE4298AEAFD00362448 /* Assets.xcassets */,
-				AE1C7DE6298AEAFD00362448 /* LaunchScreen.storyboard */,
-				AE1C7DE9298AEAFD00362448 /* Info.plist */,
+				AE15BA8D29903A86000D2C92 /* App */,
+				AE15BA8A29903771000D2C92 /* BlurHashDecode */,
+				AE1C7E0E298FC8A500362448 /* Pinterest */,
 			);
 			path = PinterestCompositionalLayout;
 			sourceTree = "<group>";
@@ -119,12 +134,18 @@
 			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
-		AE1C7E0E298FC8A500362448 /* ViewModel */ = {
+		AE1C7E0E298FC8A500362448 /* Pinterest */ = {
 			isa = PBXGroup;
 			children = (
+				AE1C7E06298FC3EE00362448 /* NetworkLayer */,
+				AE1C7DF6298BCF9D00362448 /* Views */,
+				AE1C7DF3298AFCA100362448 /* Models */,
+				AE1C7DDF298AEAFD00362448 /* PinterestViewController.swift */,
+				AE1C7DEF298AF15000362448 /* PinterestLayout.swift */,
+				AE1C7DF1298AF8FC00362448 /* PinterestLayoutExample.swift */,
 				AE1C7E0F298FC8BF00362448 /* PinterestViewModel.swift */,
 			);
-			path = ViewModel;
+			path = Pinterest;
 			sourceTree = "<group>";
 		};
 		AE1C7E13298FD19E00362448 /* Packages */ = {
@@ -153,6 +174,7 @@
 			name = PinterestCompositionalLayout;
 			packageProductDependencies = (
 				AE1C7DFA298C4F3B00362448 /* SnapKit */,
+				AE15BA88298FDEA4000D2C92 /* EasyNetwork */,
 			);
 			productName = PinterestCompositionalLayout;
 			productReference = AE1C7DD8298AEAFD00362448 /* PinterestCompositionalLayout.app */;
@@ -184,6 +206,7 @@
 			mainGroup = AE1C7DCF298AEAFD00362448;
 			packageReferences = (
 				AE1C7DF9298C4F3B00362448 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				AE15BA87298FDEA4000D2C92 /* XCRemoteSwiftPackageReference "EasyNetwork" */,
 			);
 			productRefGroup = AE1C7DD9298AEAFD00362448 /* Products */;
 			projectDirPath = "";
@@ -212,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE1C7DF5298AFCB200362448 /* PictureModel.swift in Sources */,
+				AE15BA8C29903782000D2C92 /* BlurHashDecode.swift in Sources */,
 				AE1C7DF0298AF15000362448 /* PinterestLayout.swift in Sources */,
 				AE1C7E05298FC25700362448 /* Config.swift in Sources */,
 				AE1C7DE0298AEAFD00362448 /* PinterestViewController.swift in Sources */,
@@ -363,7 +387,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X2N73UHTAA;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PinterestCompositionalLayout/Info.plist;
+				INFOPLIST_FILE = PinterestCompositionalLayout/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -390,7 +414,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X2N73UHTAA;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PinterestCompositionalLayout/Info.plist;
+				INFOPLIST_FILE = PinterestCompositionalLayout/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -432,6 +456,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AE15BA87298FDEA4000D2C92 /* XCRemoteSwiftPackageReference "EasyNetwork" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vadim-chistiakov/EasyNetwork";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		AE1C7DF9298C4F3B00362448 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -443,6 +475,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AE15BA88298FDEA4000D2C92 /* EasyNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE15BA87298FDEA4000D2C92 /* XCRemoteSwiftPackageReference "EasyNetwork" */;
+			productName = EasyNetwork;
+		};
 		AE1C7DFA298C4F3B00362448 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AE1C7DF9298C4F3B00362448 /* XCRemoteSwiftPackageReference "SnapKit" */;
