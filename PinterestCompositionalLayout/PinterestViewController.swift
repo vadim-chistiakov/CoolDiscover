@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 typealias DataSource = UICollectionViewDiffableDataSource<Section, PictureModel>
 typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<Section, PictureModel>
@@ -22,10 +23,7 @@ final class PinterestViewController: UIViewController {
     }
     
     private let viewModel: PinterestViewModel
-    
-    private var pictures = [PictureModel]()
-    private var dataSource: DataSource!
-    private var snapshot: DataSourceSnapshot!
+    private var cancellables = Set<AnyCancellable>()
     
     init(viewModel: PinterestViewModel) {
         self.viewModel = viewModel
@@ -48,8 +46,15 @@ final class PinterestViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureDataSource()
-        collectionView.setCollectionViewLayout(createLayout(), animated: false)
         viewModel.loadImages()
+            .sink { [weak self] ratios in
+                guard let self else { return }
+                self.collectionView.setCollectionViewLayout(
+                    self.createLayout(ratios: ratios),
+                    animated: false
+                )
+            }
+            .store(in: &cancellables)
     }
     
     private func configureUI() {
@@ -80,9 +85,9 @@ extension PinterestViewController: UICollectionViewDelegate  {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        collectionView.deselectItem(at: indexPath, animated: true)
-        guard let picture = dataSource.itemIdentifier(for: indexPath) else { return }
-        print(picture)
+//        collectionView.deselectItem(at: indexPath, animated: true)
+//        guard let picture = dataSource.itemIdentifier(for: indexPath) else { return }
+//        print(picture)
     }
 }
 
@@ -109,12 +114,11 @@ extension PinterestViewController {
         return layout
     }
                             
-    private func createLayout() -> UICollectionViewLayout {
-
+    private func createLayout(ratios: [CGFloat]) -> UICollectionViewLayout {
         let pinterestLayout = PinterestLayout()
         let section = pinterestLayout.makeVariousAspectRatioLayoutSection(
             columnsCount: 2,
-            itemRatios: [0.5, 0.3, 1, 1.5, 1, 2, 1, 0.48, 1, 1, 0.48, 1],
+            itemRatios: ratios,
             spacing: 10,
             contentWidth: view.bounds.width
         )
@@ -123,18 +127,22 @@ extension PinterestViewController {
     }
     
     private func configureDataSource() {
-        snapshot = DataSourceSnapshot()
-        snapshot.appendSections([Section.main])
-        snapshot.appendItems(pictures)
-        
-        dataSource = DataSource(
+        viewModel.dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: { (collectionView, indexPath, contact) -> PictureCell? in
+            cellProvider: { [weak self] (collectionView, indexPath, contact) -> PictureCell? in
+                guard let self else { return .init() }
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: Const.cellId, for: indexPath) as! PictureCell
                 cell.titleLabel.text = contact.description
+                
+                self.viewModel.loadImage(for: indexPath.item)
+                    .sink { _ in }
+                    receiveValue: { data in
+                        cell.imageView.image = UIImage(data: data)
+                    }
+                    .store(in: &self.cancellables)
+
                 return cell
             })
-        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }

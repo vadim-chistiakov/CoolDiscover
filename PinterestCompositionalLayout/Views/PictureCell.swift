@@ -9,6 +9,8 @@ import UIKit
 
 final class PictureCell: UICollectionViewCell {
     
+    lazy var imageView = UIImageView()
+    
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
@@ -23,7 +25,12 @@ final class PictureCell: UICollectionViewCell {
             blue: CGFloat.random(in: 0...1),
             alpha: 1
         )
+        contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         titleLabel.snp.makeConstraints { make in
             make.bottom.left.right.equalToSuperview().inset(5)
         }

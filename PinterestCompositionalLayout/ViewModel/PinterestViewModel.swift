@@ -7,9 +7,19 @@
 
 import Foundation
 import Combine
+import EasyNetwork
 
 final class PinterestViewModel {
     
+    private var pictures = [PictureModel]() {
+        didSet {
+            configureDataSource()
+        }
+    }
+    
+    var dataSource: DataSource!
+    var snapshot = DataSourceSnapshot()
+
     private let imagesNetworkService: ImagesNetworkService
     private var cancellables = Set<AnyCancellable>()
     
@@ -17,15 +27,26 @@ final class PinterestViewModel {
         self.imagesNetworkService = imagesNetworkService
     }
     
-    func loadImages() {
+    func loadImages() -> AnyPublisher<[CGFloat], Never> {
         imagesNetworkService.getImages(page: 1)
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { models in
-                print("models:: \(models)")
-            }
-            .store(in: &cancellables)
-
+            .handleEvents(receiveOutput: { [weak self] models in
+                self?.pictures = models
+            })
+            .map { $0.map { $0.ratio } }
+            .replaceError(with: [])
+            .eraseToAnyPublisher()
+    }
+    
+    func loadImage(for index: Int) -> AnyPublisher<Data, RequestError> {
+        imagesNetworkService.getImage(urlString: pictures[index].urls.full)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    private func configureDataSource() {
+        snapshot.appendSections([Section.main])
+        snapshot.appendItems(pictures)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }

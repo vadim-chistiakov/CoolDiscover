@@ -14,7 +14,7 @@ struct PictureModel: Hashable, Decodable {
         let raw, full, regular, small, thumb: String
     }
     
-    let description: String
+    let description: String?
     let urls: Urls
     let width: CGFloat
     let height: CGFloat

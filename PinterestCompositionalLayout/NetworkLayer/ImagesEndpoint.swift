@@ -12,30 +12,28 @@ enum ImagesEndpoint {
     case images(page: Int)
 }
 
-extension ImagesEndpoint: Endpoint {
-    var path: String {
-        switch self {
-        case .images(let page):
-            return "/photos?page=\(page)"
-        }
-    }
+extension ImagesEndpoint: GetEndpoint {
     
-    var method: RequestMethod {
-        switch self {
-        case .images:
-            return .get
-        }
+    var header: Header? {
+        ["Authorization": "Client-ID \(accessKey)"]
     }
     
     var host: String {
         "api.unsplash.com"
     }
     
-    var header: Header? {
-        ["Authorization": "Client-ID \(accessKey)"]
+    var path: String {
+        switch self {
+        case .images:
+            return "/photos"
+        }
     }
     
-    var body: Body? {
-        nil
+    var params: [URLQueryItem]? {
+        switch self {
+        case .images(let page):
+            return [.init(name: "page", value: "\(page)")]
+        }
     }
+
 }
