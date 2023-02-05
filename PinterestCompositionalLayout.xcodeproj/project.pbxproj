@@ -17,6 +17,11 @@
 		AE1C7DF5298AFCB200362448 /* PictureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DF4298AFCB200362448 /* PictureModel.swift */; };
 		AE1C7DF8298BCFC200362448 /* PictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7DF7298BCFC200362448 /* PictureCell.swift */; };
 		AE1C7DFB298C4F3B00362448 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AE1C7DFA298C4F3B00362448 /* SnapKit */; };
+		AE1C7E03298FC0AA00362448 /* Ratioable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7E02298FC0AA00362448 /* Ratioable.swift */; };
+		AE1C7E05298FC25700362448 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7E04298FC25700362448 /* Config.swift */; };
+		AE1C7E08298FC40300362448 /* ImagesNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7E07298FC40300362448 /* ImagesNetworkService.swift */; };
+		AE1C7E0D298FC58700362448 /* ImagesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7E0C298FC58700362448 /* ImagesEndpoint.swift */; };
+		AE1C7E10298FC8C000362448 /* PinterestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1C7E0F298FC8BF00362448 /* PinterestViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +36,12 @@
 		AE1C7DF1298AF8FC00362448 /* PinterestLayoutExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayoutExample.swift; sourceTree = "<group>"; };
 		AE1C7DF4298AFCB200362448 /* PictureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureModel.swift; sourceTree = "<group>"; };
 		AE1C7DF7298BCFC200362448 /* PictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCell.swift; sourceTree = "<group>"; };
+		AE1C7E02298FC0AA00362448 /* Ratioable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ratioable.swift; sourceTree = "<group>"; };
+		AE1C7E04298FC25700362448 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		AE1C7E07298FC40300362448 /* ImagesNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesNetworkService.swift; sourceTree = "<group>"; };
+		AE1C7E0C298FC58700362448 /* ImagesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesEndpoint.swift; sourceTree = "<group>"; };
+		AE1C7E0F298FC8BF00362448 /* PinterestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestViewModel.swift; sourceTree = "<group>"; };
+		AE1C7E14298FD19E00362448 /* EasyNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = EasyNetwork; path = ../EasyNetwork; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +59,7 @@
 		AE1C7DCF298AEAFD00362448 = {
 			isa = PBXGroup;
 			children = (
+				AE1C7E13298FD19E00362448 /* Packages */,
 				AE1C7DDA298AEAFD00362448 /* PinterestCompositionalLayout */,
 				AE1C7DD9298AEAFD00362448 /* Products */,
 			);
@@ -64,8 +76,10 @@
 		AE1C7DDA298AEAFD00362448 /* PinterestCompositionalLayout */ = {
 			isa = PBXGroup;
 			children = (
+				AE1C7E06298FC3EE00362448 /* NetworkLayer */,
 				AE1C7DF6298BCF9D00362448 /* Views */,
 				AE1C7DF3298AFCA100362448 /* Models */,
+				AE1C7E0E298FC8A500362448 /* ViewModel */,
 				AE1C7DDB298AEAFD00362448 /* AppDelegate.swift */,
 				AE1C7DDD298AEAFD00362448 /* SceneDelegate.swift */,
 				AE1C7DDF298AEAFD00362448 /* PinterestViewController.swift */,
@@ -81,6 +95,8 @@
 		AE1C7DF3298AFCA100362448 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AE1C7E04298FC25700362448 /* Config.swift */,
+				AE1C7E02298FC0AA00362448 /* Ratioable.swift */,
 				AE1C7DF4298AFCB200362448 /* PictureModel.swift */,
 			);
 			path = Models;
@@ -92,6 +108,31 @@
 				AE1C7DF7298BCFC200362448 /* PictureCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		AE1C7E06298FC3EE00362448 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				AE1C7E07298FC40300362448 /* ImagesNetworkService.swift */,
+				AE1C7E0C298FC58700362448 /* ImagesEndpoint.swift */,
+			);
+			path = NetworkLayer;
+			sourceTree = "<group>";
+		};
+		AE1C7E0E298FC8A500362448 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AE1C7E0F298FC8BF00362448 /* PinterestViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AE1C7E13298FD19E00362448 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				AE1C7E14298FD19E00362448 /* EasyNetwork */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,9 +213,14 @@
 			files = (
 				AE1C7DF5298AFCB200362448 /* PictureModel.swift in Sources */,
 				AE1C7DF0298AF15000362448 /* PinterestLayout.swift in Sources */,
+				AE1C7E05298FC25700362448 /* Config.swift in Sources */,
 				AE1C7DE0298AEAFD00362448 /* PinterestViewController.swift in Sources */,
 				AE1C7DDC298AEAFD00362448 /* AppDelegate.swift in Sources */,
+				AE1C7E10298FC8C000362448 /* PinterestViewModel.swift in Sources */,
 				AE1C7DDE298AEAFD00362448 /* SceneDelegate.swift in Sources */,
+				AE1C7E08298FC40300362448 /* ImagesNetworkService.swift in Sources */,
+				AE1C7E03298FC0AA00362448 /* Ratioable.swift in Sources */,
+				AE1C7E0D298FC58700362448 /* ImagesEndpoint.swift in Sources */,
 				AE1C7DF8298BCFC200362448 /* PictureCell.swift in Sources */,
 				AE1C7DF2298AF8FC00362448 /* PinterestLayoutExample.swift in Sources */,
 			);

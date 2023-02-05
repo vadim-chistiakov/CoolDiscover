@@ -9,14 +9,23 @@ import UIKit
 
 final class PictureCell: UICollectionViewCell {
     
-    lazy var titleLabel = UILabel()
+    lazy var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.textAlignment = .center
+        return titleLabel
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .green
+        backgroundColor = UIColor.init(
+            red: CGFloat.random(in: 0...1),
+            green: CGFloat.random(in: 0...1),
+            blue: CGFloat.random(in: 0...1),
+            alpha: 1
+        )
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.bottom.left.right.equalToSuperview()
+            make.bottom.left.right.equalToSuperview().inset(5)
         }
     }
     

@@ -21,16 +21,23 @@ final class PinterestViewController: UIViewController {
         static let cellId = "cellId"
     }
     
+    private let viewModel: PinterestViewModel
+    
     private var pictures = [PictureModel]()
     private var dataSource: DataSource!
     private var snapshot: DataSourceSnapshot!
     
+    init(viewModel: PinterestViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var collectionView: UICollectionView = {
-        collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: createLayout()
-        )
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PictureCell.self, forCellWithReuseIdentifier: Const.cellId)
@@ -40,8 +47,9 @@ final class PinterestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        createData()
         configureDataSource()
+        collectionView.setCollectionViewLayout(createLayout(), animated: false)
+        viewModel.loadImages()
     }
     
     private func configureUI() {
@@ -51,6 +59,18 @@ final class PinterestViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    private func configureRefresh() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        refreshControl.tintColor = .gray
+        collectionView.refreshControl = refreshControl
+    }
+    
+    @objc
+    private func handleRefresh() {
+        
     }
 
 }
@@ -67,39 +87,37 @@ extension PinterestViewController: UICollectionViewDelegate  {
 }
 
 extension PinterestViewController {
-    private func createData() {
-        for i in 0..<5 {
-            pictures.append(PictureModel(title: "Picture \(i+1)", image: ""))
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            for i in 5..<10 {
-                self.snapshot.insertItems(
-                    [PictureModel(title: "Picture \(i+1)", image: "")],
-                    afterItem: self.pictures[1]
-                )
-//                self.snapshot.appendItems([PictureModel(title: "Picture \(i+1)", image: "")])
-                self.dataSource.apply(self.snapshot, animatingDifferences: true)
-            }
-        }
-    }
-                            
-    private func createLayout() -> UICollectionViewLayout {
+
+    private func createUsialLayout() -> UICollectionViewLayout  {
         let itemSize = NSCollectionLayoutSize(
             widthDimension:  .fractionalWidth(0.5),
             heightDimension: .fractionalWidth(0.5)
         )
-        
+
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(0.5) //height??
+            heightDimension: .fractionalWidth(0.5)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize:  groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
+                            
+    private func createLayout() -> UICollectionViewLayout {
+
+        let pinterestLayout = PinterestLayout()
+        let section = pinterestLayout.makeVariousAspectRatioLayoutSection(
+            columnsCount: 2,
+            itemRatios: [0.5, 0.3, 1, 1.5, 1, 2, 1, 0.48, 1, 1, 0.48, 1],
+            spacing: 10,
+            contentWidth: view.bounds.width
+        )
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
@@ -114,7 +132,7 @@ extension PinterestViewController {
             cellProvider: { (collectionView, indexPath, contact) -> PictureCell? in
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: Const.cellId, for: indexPath) as! PictureCell
-                cell.titleLabel.text = contact.title
+                cell.titleLabel.text = contact.description
                 return cell
             })
         dataSource.apply(snapshot, animatingDifferences: false)
