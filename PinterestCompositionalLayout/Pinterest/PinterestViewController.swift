@@ -42,7 +42,6 @@ final class PinterestViewController: UIViewController, UICollectionViewDelegate 
             collectionViewLayout: UICollectionViewLayout()
         )
         collectionView.delegate = self
-        collectionView.backgroundColor = .systemGray
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(PictureCell.self, forCellWithReuseIdentifier: Const.cellId)
         return collectionView
@@ -63,7 +62,7 @@ final class PinterestViewController: UIViewController, UICollectionViewDelegate 
     
     private func configureUI() {
         title = "Pinterest Compositional Layout"
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .black
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -90,85 +89,16 @@ final class PinterestViewController: UIViewController, UICollectionViewDelegate 
     }
     
     private func configureLayout(ratios: [Ratioable]) {
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, enviroment in
-            guard let self,
-                    let section = Section(rawValue: sectionIndex)
-            else { return nil }
-            switch section {
-            case .carousel :
-                return self.carouselBannerSection()
-            case .widget :
-                return self.widgetBannerSection()
-            case .pinterest:
-                return self.pinterestSection(ratios: ratios)
-            }
-        }
+        let layout = CustomCompositionalLayout.layout(
+            ratios: ratios,
+            contentWidth: view.frame.width
+        )
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
 
 }
 
 extension PinterestViewController {
-    
-    private func carouselBannerSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(1)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitems: [item]
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.visibleItemsInvalidationHandler = { (items, offset, environment) in
-            items.forEach { item in
-                let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
-                let minScale: CGFloat = 0.8
-                let maxScale: CGFloat = 1.0
-                let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
-                item.transform = CGAffineTransform(scaleX: scale, y: scale)
-            }
-        }
-        return section
-    }
-    
-    private func widgetBannerSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.2),
-            heightDimension: .fractionalWidth(0.3)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitems: [item]
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 10, leading: 5, bottom: 10, trailing: 5)
-        section.orthogonalScrollingBehavior = .continuous
-        return section
-    }
-                            
-    private func pinterestSection(ratios: [Ratioable]) -> NSCollectionLayoutSection {
-        PinterestLayout().makeVariousAspectRatioLayoutSection(
-            columnsCount: 2,
-            itemRatios: ratios,
-            spacing: 10,
-            contentWidth: view.bounds.width
-        )
-    }
     
     private func configureDataSource() {
         viewModel.dataSource = DataSource(
@@ -180,9 +110,7 @@ extension PinterestViewController {
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: Const.cellId, for: indexPath) as! PictureCell
                 cell.imageView.image = UIImage(blurHash: model.blurHash, size: model.blurHashSize)
-                
-                //TODO: - Как лучше организовать запрос картинок?
-                
+                cell.titleLabel.text = "\(indexPath.item)"
                 self.viewModel.loadImage(for: indexPath.item, inSection: section)
                     .sink { _ in }
                     receiveValue: { data in

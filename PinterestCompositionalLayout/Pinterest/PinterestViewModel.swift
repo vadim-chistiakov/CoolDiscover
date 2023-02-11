@@ -68,9 +68,9 @@ final class PinterestViewModelImpl: PinterestViewModel {
         snapshot.deleteAllItems()
         snapshot.appendSections(Section.allCases)
         
-        snapshot.appendItems(pictures[0...9].map { $0 }, toSection: .carousel)
+        snapshot.appendItems(pictures[20...29].map { $0 }, toSection: .carousel)
         snapshot.appendItems(pictures[10...19].map { $0 }, toSection: .widget)
-        snapshot.appendItems(pictures[20...29].map { $0 }, toSection: .pinterest)
+        snapshot.appendItems(pictures[0...9].map { $0 }, toSection: .pinterest)
 
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
         isRefreshing = false
