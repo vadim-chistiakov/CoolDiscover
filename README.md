@@ -3,5 +3,4 @@
 The most exciting first screen in apps
 
 
-https://user-images.githubusercontent.com/22453570/218309829-7543ef09-7399-49ea-b236-f0d8295c86f3.mov
-
+![ezgif-4-dbd8ab7133](https://user-images.githubusercontent.com/22453570/218311471-b10d9b9f-475d-427d-8bbf-d3ee89a8bef4.gif)
