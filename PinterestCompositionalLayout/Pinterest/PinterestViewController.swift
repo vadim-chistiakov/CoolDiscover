@@ -22,6 +22,7 @@ final class PinterestViewController: UIViewController, UICollectionViewDelegate 
     
     private enum Const {
         static let cellId = "cellId"
+        static let headerId = "headerId"
     }
     
     private let viewModel: PinterestViewModel
@@ -43,7 +44,15 @@ final class PinterestViewController: UIViewController, UICollectionViewDelegate 
         )
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(PictureCell.self, forCellWithReuseIdentifier: Const.cellId)
+        collectionView.register(
+            PictureCell.self,
+            forCellWithReuseIdentifier: Const.cellId
+        )
+        collectionView.register(
+            HeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: Const.headerId
+        )
         return collectionView
     }()
     
@@ -95,7 +104,7 @@ final class PinterestViewController: UIViewController, UICollectionViewDelegate 
         )
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
-
+    
 }
 
 extension PinterestViewController {
@@ -110,16 +119,34 @@ extension PinterestViewController {
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: Const.cellId, for: indexPath) as! PictureCell
                 cell.imageView.image = UIImage(blurHash: model.blurHash, size: model.blurHashSize)
-                cell.titleLabel.text = "\(indexPath.item)"
                 self.viewModel.loadImage(for: indexPath.item, inSection: section)
+                    .delay(for: 2, scheduler: DispatchQueue.main)
                     .sink { _ in }
                     receiveValue: { data in
+                        
                         cell.imageView.image = UIImage(data: data)
                     }
                     .store(in: &self.cancellables)
-
                 return cell
             }
         )
+        viewModel.dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
+            guard let section = Section(rawValue: indexPath.section),
+                  let header: HeaderView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: Const.headerId,
+                    for: indexPath
+                  ) as? HeaderView
+            else { return .init() }
+            switch section {
+            case .carousel:
+                break
+            case .widget:
+                header.titleLabel.text = "Widget"
+            case .pinterest:
+                header.titleLabel.text = "Pinterest"
+            }
+            return header
+        }
     }
 }

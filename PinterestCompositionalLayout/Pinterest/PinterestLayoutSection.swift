@@ -11,12 +11,14 @@ import UIKit
 final class PinterestLayoutSection {
     
     var section: NSCollectionLayoutSection {
-        .init(group: customLayoutGroup)
+        let section = NSCollectionLayoutSection(group: customLayoutGroup)
+        section.contentInsets = .init(top: 0, leading: padding, bottom: 0, trailing: padding)
+        return section
     }
     
     //MARK: - Private methods
     
-    private let columnsCount: Int
+    private let numberOfColumns: Int
     private let itemRatios: [Ratioable]
     private let spacing: CGFloat
     private let contentWidth: CGFloat
@@ -58,7 +60,7 @@ final class PinterestLayoutSection {
         spacing: CGFloat,
         contentWidth: CGFloat
     ) {
-        self.columnsCount = columnsCount
+        self.numberOfColumns = columnsCount
         self.itemRatios = itemRatios
         self.spacing = spacing
         self.contentWidth = contentWidth
@@ -68,15 +70,15 @@ final class PinterestLayoutSection {
         var contentHeight: CGFloat = 0
         
         // Subtract the margin from the total width and divide by the number of columns
-        let columnWidth = (contentWidth - insets.leading - insets.trailing) / CGFloat(columnsCount)
+        let columnWidth = (contentWidth - insets.leading - insets.trailing) / CGFloat(numberOfColumns)
         
         // Stores x-coordinate offset for each column. Not changing
-        let xOffset = (0..<columnsCount).map { CGFloat($0) * columnWidth }
+        let xOffset = (0..<numberOfColumns).map { CGFloat($0) * columnWidth }
         
         var currentColumn = 0
 
         // Stores x-coordinate offset for each column.
-        var yOffset: [CGFloat] = .init(repeating: 0, count: columnsCount)
+        var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
         
         // Total number of frames
         var frames = [CGRect]()
@@ -94,7 +96,7 @@ final class PinterestLayoutSection {
             // Total frame inset between cells and along edges
             .insetBy(dx: padding, dy: padding)
             // Additional top and left offset to account for padding
-            .offsetBy(dx: insets.top, dy: insets.leading)
+            .offsetBy(dx: 0, dy: insets.leading)
             // update the height to keep the correct aspect ratio
             .setHeight(ratio: aspectRatio.ratio)
             
@@ -106,7 +108,7 @@ final class PinterestLayoutSection {
             yOffset[currentColumn] = columnLowestPoint
             // Adding the next element to the minimum height column.
             // We can move sequentially, but then there is a chance that some columns will be much longer than others
-            currentColumn = yOffset.firstMinIndex ?? 0
+            currentColumn = yOffset.indexOfMinElement ?? 0
         }
         return frames
     }
@@ -114,7 +116,7 @@ final class PinterestLayoutSection {
 
 private extension Array where Element: Comparable {
     // Index of min element in Array
-    var firstMinIndex: Int? {
+    var indexOfMinElement: Int? {
         guard count > 0 else { return nil }
         var min = first
         var index = 0

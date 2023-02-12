@@ -41,13 +41,13 @@ final class CustomCompositionalLayout {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
             items.forEach { item in
                 let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
                 let minScale: CGFloat = 0.8
-                let maxScale: CGFloat = 1.0
-                let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
+                let maxScale: CGFloat = 1.0 - distanceFromCenter / environment.container.contentSize.width
+                let scale = max(maxScale, minScale)
                 item.transform = CGAffineTransform(scaleX: scale, y: scale)
             }
         }
@@ -71,6 +71,20 @@ final class CustomCompositionalLayout {
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
+        let supplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(30)
+            ),
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+        )
+        supplementaryItem.contentInsets = .init(
+            top: 0,
+            leading: 5,
+            bottom: 0,
+            trailing: 5
+        )
+        section.boundarySupplementaryItems = [supplementaryItem]
         section.contentInsets = .init(top: 10, leading: 5, bottom: 10, trailing: 5)
         section.orthogonalScrollingBehavior = .continuous
         return section
@@ -80,12 +94,28 @@ final class CustomCompositionalLayout {
         ratios: [Ratioable],
         contentWidth: CGFloat
     ) -> NSCollectionLayoutSection {
-        PinterestLayoutSection(
+        let spacing: CGFloat = 5
+        let pinterestSection = PinterestLayoutSection(
             columnsCount: 2,
             itemRatios: ratios,
-            spacing: 10,
+            spacing: spacing * 2,
             contentWidth: contentWidth
         ).section
+        let supplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(30)
+            ),
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+        )
+        supplementaryItem.contentInsets = .init(
+            top: 0,
+            leading: spacing,
+            bottom: 0,
+            trailing: spacing
+        )
+        pinterestSection.boundarySupplementaryItems = [supplementaryItem]
+        return pinterestSection
     }
     
 }
